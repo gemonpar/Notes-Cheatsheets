@@ -41,3 +41,22 @@ R3(config)#ip route 192.168.1.0 255.255.255.0 192.168.13.1
 
 #### PC1 Config
 Just IP configuration for PC1-192.168.3.1 and Gateway_IP-192.168.3.254
+
+## 2. VLANs
+
+![](/CCNA/Images/VLANs.PNG)
+#### PC1 Config
+PC1 config is just IP-Config: 10.0.0.1/26 and Gateway-IP: 10.0.0.62
+#### PC2 Config
+PC2 config is just IP-Config: 10.0.0.2/26 and Gateway-IP: 10.0.0.62
+#### PC3 Config
+PC3 config is just IP-Config: 10.0.0.65/26 and Gateway-IP: 10.0.0.126
+#### PC4 Config
+PC4 config is just IP-Config: 10.0.0.66/26 and Gateway-IP: 10.0.0.126
+#### PC5 Config
+PC5 config is just IP-Config: 10.0.0.129/26 and Gateway-IP: 10.0.0.190
+#### PC6 Config
+PC6 config is just IP-Config: 10.0.0.130/26 and Gateway-IP: 10.0.0.190
+#### SW1 Config
+
+#### R1 Config
