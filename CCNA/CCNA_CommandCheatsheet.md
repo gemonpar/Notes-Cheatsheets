@@ -1,6 +1,6 @@
 # CCNA
 ## 1. Static Routes
-![](/Images/StaticRoutes.PNG)
+![](/CCNA/Images/StaticRoutes.PNG)
 #### PC0 Config
 Just IP configuration for PC1-192.168.1.1 and Gateway_IP-192.168.1.254
 #### R1 Config
