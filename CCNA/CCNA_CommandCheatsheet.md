@@ -149,3 +149,68 @@ R1(config-if)# interface g0/0.30
 R1(config-subif)# encapsulation dot1q 30
 R1(config-subif)# ip address 10.0.0.190 255.255.255.192
 ```
+## 4. Layer 3 Switch
+
+![](/CCNA/Images/Layer3_Switch.PNG)
+#### PC1 Config
+PC1 config is just IP-Config: 10.0.0.1/26 and Gateway-IP: 10.0.0.62
+#### PC2 Config
+PC2 config is just IP-Config: 10.0.0.2/26 and Gateway-IP: 10.0.0.62
+#### PC3 Config
+PC3 config is just IP-Config: 10.0.0.129/26 and Gateway-IP: 10.0.0.190
+#### PC4 Config
+PC4 config is just IP-Config: 10.0.0.130/26 and Gateway-IP: 10.0.0.190
+#### PC5 Config
+PC5 config is just IP-Config: 10.0.0.65/26 and Gateway-IP: 10.0.0.126
+#### PC6 Config
+PC6 config is just IP-Config: 10.0.0.4/26 and Gateway-IP: 10.0.0.62
+#### PC7 Config
+PC7 config is just IP-Config: 10.0.0.3/26 and Gateway-IP: 10.0.0.62
+#### SW1 Config
+```sh
+SW1(config)# interface range f0/1-2
+SW1(config-if-range)# switchport mode access
+SW1(config-if-range)# switchport access vlan 10
+SW1(config)# interface range f0/3-4
+SW1(config-if-range)# switchport mode access
+SW1(config-if-range)# switchport access vlan 30
+SW1(config-if-range)# interface g0/1
+SW1(config-if)# switchport mode trunk
+SW1(config-if)# switchport trunk allowed vlan 10,30
+SW1(config-if)# switchport trunk native vlan 1001
+```
+#### SW2 Config
+```sh
+SW2(config)# interface range g1/0/3
+SW2(config-if-range)# switchport mode access
+SW2(config-if-range)# switchport access vlan 20
+SW2(config)# interface range f1/0/4-5
+SW2(config-if-range)# switchport mode access
+SW2(config-if-range)# switchport access vlan 10
+SW2(config-if-range)# interface g1/0/1
+SW2(config-if)# switchport mode trunk
+SW2(config-if)# switchport trunk allowed vlan 10,30
+SW2(config-if)# swithcport trunk native vlan 1001
+SW2(config-if)# vlan 30
+SW2(config-vlan)# exit
+SW2(config)# interface g1/0/2
+SW2(config-if)# no switchport
+SW2(config-if)# ip address 10.0.0.193 255.255.255.252
+SW2(config-if)# exit
+SW2(config)# ip routing
+SW2(config)# ip route 0.0.0.0 0.0.0.0 10.0.0.194
+SW2(config)# interface vlan 10
+SW2(config-if)# ip address 10.0.0.62 255.255.255.192
+SW2(config-if)# no shutdown
+SW2(config-if)# interface vlan 20
+SW2(config-if)# ip address 10.0.0.126 255.255.255.192
+SW2(config-if)# no shutdown
+SW2(config-if)# interface vlan 30
+SW2(config-if)# ip address 10.0.0.190 255.255.255.192
+SW2(config-if)# no shutdown
+```
+#### R1 Config
+```sh
+R1(config)# interface g0/0
+R1(config-if)# ip address 10.0.0.194 255.255.255.252
+```
