@@ -58,5 +58,30 @@ PC5 config is just IP-Config: 10.0.0.129/26 and Gateway-IP: 10.0.0.190
 #### PC6 Config
 PC6 config is just IP-Config: 10.0.0.130/26 and Gateway-IP: 10.0.0.190
 #### SW1 Config
+SW1(config)# interface range g0/1,f3/1,f4/1
+SW1(config-if-range)# switchport mode access
+SW1(config-if-range)# switchport access vlan 10
+SW1(config-if-range)# interface range g1/1,f5/1,f6/1
+SW1(config-if-range)# switchport mode access
+SW1(config-if-range)# switchport access vlan 20
+SW1(config-if-range)# interface range g2/1,f7/1,f8/1
+SW1(config-if-range)# switchport mode access
+SW1(config-if-range)# switchport access vlan 30
+SW1(config-if-range)# vlan 10
+SW1(config-if-range)# name ENGINEERING
+SW1(config-if-range)# vlan 20
+SW1(config-if-range)# name HR
+SW1(config-if-range)# vlan 30
+SW1(config-if-range)# name SALES
 
 #### R1 Config
+R1(config)# interface g0/0
+R1(config-if)# ip address 10.0.0.62 255.255.255.192
+R1(config-ig)# no shutdown
+R1(config-if)# interface g0/1
+R1(config-if)# ip address 10.0.0.126 255.255.255.192
+R1(config-ig)# no shutdown
+R1(config-if)# interface g0/2
+R1(config-if)# ip address 10.0.0.190 255.255.255.192
+R1(config-ig)# no shutdown
+
