@@ -88,6 +88,7 @@ R1(config-if)# ip address 10.0.0.190 255.255.255.192
 R1(config-ig)# no shutdown
 ```
 ## 3. Trunk Ports/ROAS
+![](/CCNA/Images/TrunkPorts.PNG)
 #### PC1 Config
 PC1 config is just IP-Config: 10.0.0.1/26 and Gateway-IP: 10.0.0.62
 #### PC2 Config
