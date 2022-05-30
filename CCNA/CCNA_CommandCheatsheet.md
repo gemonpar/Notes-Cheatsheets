@@ -211,6 +211,9 @@ SW2(config-if)# no shutdown
 ```
 #### R1 Config
 ```sh
+R1(config)# ip route 10.0.0.0 255.255.255.192 10.0.0.193 
+R1(config)# ip route 10.0.0.128 255.255.255.192 10.0.0.193 
+R1(config)# ip route 10.0.0.64 255.255.255.192 10.0.0.193 
 R1(config)# interface g0/0
 R1(config-if)# ip address 10.0.0.194 255.255.255.252
 ```
