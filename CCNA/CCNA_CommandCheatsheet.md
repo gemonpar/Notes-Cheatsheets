@@ -217,3 +217,51 @@ R1(config)# ip route 10.0.0.64 255.255.255.192 10.0.0.193
 R1(config)# interface g0/0
 R1(config-if)# ip address 10.0.0.194 255.255.255.252
 ```
+## 5. Spanning Tree Protocol Comprehension
+
+![](/CCNA/Images/STP_Comp.PNG)
+
+| Bridge ID (62 bits) |
+|---|
+| Bridge Priority (16 bits) + MAC Address (48 bits) |
+
+| Bridge Priority (16 bits) |
+|---|
+| Bridge Priority (4 bits) + Extended System ID/VLAN ID (12 bits) |                                                               
+
+1. The first step is to know which switch is the root bridge. So following the process of designation the switch with the lowest Bridge ID will be the root bridge. Following that, SW3 will be the root bridge, so all the ports of the switch will be a designated port (forwarding state).
+2. The second step is to know the root port (Forwarding State) of each remaining switch. The process to elect the root port is the following:
+   - 1: Lowest root cost
+   - 2: Lowest neighbor Bridge ID (Bridge Priority + MAC Address)
+   - 3: Lowest neighbor Port ID (Port Priority + Port Number)
+   Following the above.
+3. Each remaining collisioin domain will select ONE interface to be a designated port (forwarding state). The other port in the collision domain will be non-designated (blocking). Designated port selection:
+   - 1: Interface on switch with lowest root cost
+   - 2: Interface on switch with lowest Bridge ID
+   
+#### SW1 Port State
+ - F0/1: Non-Designated Port
+ - F0/2: Non-Designated Port
+ - F0/3: Non-Designated Port
+ - F0/4: Root Port
+
+#### SW2 Port State
+ - F0/1: Designated Port
+ - F0/2: Designated Port
+ - F0/3: Non-Designated Port
+ - G0/1: Root Port
+ 
+#### SW3 Port State (Root Bridge)
+ - F0/1: Designated Port
+ - F0/2: Designated Port
+ - F0/3: Designated Port
+ - G0/1: Designated Port
+
+#### SW4 Port State
+ - G0/1: Designated Port
+ - G0/2: Root Port
+
+## 6. EtherChannel
+
+![](/CCNA/Images/EtherChannel.PNG)
+#### PC1 Configuration
