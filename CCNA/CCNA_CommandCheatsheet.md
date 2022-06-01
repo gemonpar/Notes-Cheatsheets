@@ -261,7 +261,53 @@ R1(config-if)# ip address 10.0.0.194 255.255.255.252
  - G0/1: Designated Port
  - G0/2: Root Port
 
-## 6. EtherChannel
+## 6. Configuring STP (PVST+)
+![](/CCNA/Images/STP_Configuring.PNG)
+
+Spanning Tree runs by default, however there is no garanty the networks follows the optimal path. First of all, is to check the current STP topology, root bridge and port states using the command `SW1# show spanning-tree` on every switch.
+
+#### 1. Configure SW1 as the primary root for VLAN 1 and the secondary root for VLAN 2. Configure SW2 and the primary root for VLAN 2 and the secondary root for VLAN 1. What is the STP role/state of each port on each switch now?
+SW1:
+```sh
+SW1(config)# spanning-tree vlan 1 root primary
+SW1(config)# spanning-tree vlan 2 root secondary
+```
+
+SW2:
+```sh
+SW2(config)# spanning-tree vlan 1 root secondary
+SW2(config)# spanning-tree vlan 2 root primary
+```
+#### 2. Increase the VLAN 1 cost of SW4's F0/2 interface to 100. Does SW4 select a different root port? Why/Why not?
+```sh
+SW4(config)# interface f0/2
+SW4(config-if)# spanning-tree vlan 1 cost 100
+SW4(config-if)# do show spanning-tree vlan 1
+```
+#### 3. Increase the VLAN 1 port priority of SW1's F0/1 to 240. Does SW3 select a different root port? Why/Why not?
+SW1:
+```sh
+SW1(config)# interfaces f0/1
+SW1(config-if)# spanning-tree vlan 1 port-priority 240
+```
+
+#### 4. Configure PortFast and BPDU Guard on the F0/3 interfaces of SW3/SW4.
+
+SW3:
+```sh
+SW3(config)# interface f0/3
+SW3(config-if)# spanning-tree portfast
+SW3(config-if)# spanning-tree bpdguard enable
+```
+
+SW4:
+```sh
+SW4(config)# interface f0/3
+SW4(config-if)# spanning-tree portfast
+SW4(config-if)# spanning-tree bpdguard enable
+```
+
+## 7. EtherChannel
 
 ![](/CCNA/Images/EtherChannel.PNG)
 #### PC1 Configuration
