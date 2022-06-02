@@ -311,3 +311,41 @@ SW4(config-if)# spanning-tree bpdguard enable
 
 ![](/CCNA/Images/EtherChannel.PNG)
 #### PC1 Configuration
+PC1 config is just IP-Config: 172.16.1.1/24 and Gateway-IP: 172.16.1.254/24
+
+#### PC2 Configuration
+PC2 config is just IP-Config: 172.16.1.2/24 and Gateway-IP: 172.16.1.254/24
+
+#### SRV1 Configuration
+SRV1 config is just IP-Config: 172.16.2.1/24 and Gateway-IP: 172.16.2.254/24
+
+#### ASW1 Configuration
+```sh
+ASW1(config)# interface range g0/1-2
+ASW1(config-if-range)# channel-group 1 mode active
+ASW1(config-if-range)# interface po1
+ASW1(config-if)# switchport mode trunk
+```
+#### ASW2 Configuration
+```sh
+ASW2(config)# interface range g0/1-2
+ASW2config-if-range)# channel-group 1 mode active
+ASW2(config-if-range)# interface po1
+ASW2(config-if)# switchport mode trunk
+```
+#### DSW1 Configuration
+```sh
+DSW1(config)# interface range g1/0/3-4
+DSW1(config-if-range)# channel group 1 mode active
+DSW1(config-if-range)# interface po1
+DSW1(config-if)# switchport trunk encapsulation dot1q
+DSW1(config-if)# switchport mode trunk
+```
+#### DSW2 Configuration
+```sh
+DSW2(config)# interface range g1/0/3-4
+DSW2(config-if-range)# channel group 1 mode active
+DSW2(config-if-range)# interface po1
+DSW2(config-if)# switchport trunk encapsulation dot1q
+DSW2(config-if)# switchport mode trunk
+```
