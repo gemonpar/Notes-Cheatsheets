@@ -320,20 +320,34 @@ PC2 config is just IP-Config: 172.16.1.2/24 and Gateway-IP: 172.16.1.254/24
 SRV1 config is just IP-Config: 172.16.2.1/24 and Gateway-IP: 172.16.2.254/24
 
 #### ASW1 Configuration
+Layer 2 EtherChannel LACP Configuration to DSW1
 ```sh
 ASW1(config)# interface range g0/1-2
 ASW1(config-if-range)# channel-group 1 mode active
 ASW1(config-if-range)# interface po1
 ASW1(config-if)# switchport mode trunk
 ```
+
+Load-Balance based on source and destination IP
+```sh
+ASW1(config)# port-channel load-balance src-dst-ip
+```
+
 #### ASW2 Configuration
+Layer 2 EtherChannel PAgP Configuration to DSW2
 ```sh
 ASW2(config)# interface range g0/1-2
 ASW2config-if-range)# channel-group 1 mode active
 ASW2(config-if-range)# interface po1
 ASW2(config-if)# switchport mode trunk
 ```
+Load-Balance based on source and destination IP
+```sh
+ASW2(config)# port-channel load-balance src-dst-ip
+```
+
 #### DSW1 Configuration
+Layer 2 EtherChannel LACP Configuration to ASW1
 ```sh
 DSW1(config)# interface range g1/0/3-4
 DSW1(config-if-range)# channel group 1 mode active
@@ -341,11 +355,51 @@ DSW1(config-if-range)# interface po1
 DSW1(config-if)# switchport trunk encapsulation dot1q
 DSW1(config-if)# switchport mode trunk
 ```
+
+Layer 3 EtherChannel Static EtherChannel to DSW2
+```sh
+DSW1(config-if)# interface range g1/0/1 - 2
+DSW1(config-if-range)# no switchport
+DSW1(config-if-range)# channel-group 2 mode on
+DSW1(config-if-range)# interface po2
+DSW1(config-if)# ip address 10.0.0.1 255.255.255.252
+```
+Static Routing between VLANs
+```sh
+DSW1(config)# ip routing
+DSW1(config)# ip route 172.16.2.0 255.255.255.0 10.0.0.2
+```
+
+Load-Balance based on source and destination IP
+```sh
+DSW1(config)# port-channel load-balance src-dst-ip
+```
+
 #### DSW2 Configuration
+Layer 2 EtherChannel PAgP Confiugration to ASW2
 ```sh
 DSW2(config)# interface range g1/0/3-4
 DSW2(config-if-range)# channel group 1 mode active
 DSW2(config-if-range)# interface po1
 DSW2(config-if)# switchport trunk encapsulation dot1q
 DSW2(config-if)# switchport mode trunk
+```
+
+Layer 3 EtherChannel Static EtherChannel to DSW1
+```sh
+DSW2(config-if)# interface range g1/0/1 - 2
+DSW2(config-if-range)# no switchport
+DSW2(config-if-range)# channel-group 2 mode on
+DSW2(config-if-range)# interface po2
+DSW2(config-if)# ip address 10.0.0.2 255.255.255.252
+```
+
+Static Routing between VLANs
+```sh
+DSW2(config)# ip routing
+DSW2(config)# ip route 172.16.1.0 255.255.255.0 10.0.0.1
+```
+Load-Balance based on source and destination IP
+```sh
+DSW2(config)# port-channel load-balance src-dst-ip
 ```
