@@ -403,3 +403,17 @@ Load-Balance based on source and destination IP
 ```sh
 DSW2(config)# port-channel load-balance src-dst-ip
 ```
+## 8. Floating Static Routes
+![](/CCNA/Images/FloatingStaticRoutes.PNG)
+
+#### 1. Check the routing tables of R1 and R2. Which dynamic routing protocol is Enterprise A using? Which route will be used if PC1 tries to access SRV1? Which route will be used if PC1 tries to access remote server 1.1.1.1 over the Internet?
+
+To check the routing tables `R1# show ip route`. Enterprise A is using OSPF. The that will be used is the OSPF route `10.0.2.0/24 [110/2] via 10.0.0.2, 00:28:43, GigabitEthernet0/2/0`. The route to access 1.1.1.1 is `0.0.0.0/0 [1/0] via 203.0.113.9`.
+
+#### 2. Configure floating static routes on R1 and R2 that allow PC1 to reach SRV1 if the link between R1 and R2 fails. Do the routes enter the routing tables of R1 and R2?
+
+
+
+#### 3. Shut down the G0/2/0 interface of R1 or R2. Do the floating static routes enter the routing tables of R1 and R2? Ping from PC1 to SRV1 to confirm.
+     
+    
