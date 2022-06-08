@@ -2,7 +2,8 @@
 ## 1. Static Routes
 ![](/CCNA/Images/StaticRoutes.PNG)
 #### PC0 Config
-Just IP configuration for PC1-192.168.1.1 and Gateway_IP-192.168.1.254
+Just IP configuration for PC1-192.168.1.1 and Gateway_IP-192.168.1.
+
 #### R1 Config
 
 ```sh
@@ -434,7 +435,7 @@ Yes, as the OSPF routes are no more available the static routes that we configur
 On every router this are the following commands to run replacing it with the appropiate interface and ip/mask:
 ```sh
 R1(config)# interface g0/0
-R1(config-if)# ip address 192.168.4.254 255.255.255.254
+R1(config-if)# ip address 192.168.4.254 255.255.255.0
 R1(config-if)# no shutdown
 ```
 
@@ -495,11 +496,57 @@ R1(config-router)# variance 2
 ![](/CCNA/Images/OSPF_1.PNG)
 
 #### 1. Configure the appropriate hostnames and IP addresses on each device.  Enable router interfaces. (You don't have to configure ISPR1)
-
+On every router this are the following commands to run replacing it with the appropiate interface and ip/mask:
+```sh
+R1(config)# interface g0/0
+R1(config-if)# ip address 10.0.12.1 255.255.255.252
+R1(config-if)# no shutdown
+```
 #### 2. Configure a loopback interface on each router (1.1.1.1/32 for R1, 2.2.2.2/32 for R2, etc.)
-
+On every router this are the following commands to run, replacing it with the appropiate ip address of the loopback.
+```sh
+R1(config)# interface l0
+R1(config)# ip address 1.1.1.1 255.255.255.255
+```
 #### 3. Configure OSPF on each router. Enable OSPF on each interface (including loopback interfaces). (Do not enable OSPF on R1's Internet link) Configure passive interfaces where appropriate (including loopback interfaces).
 
-#### 4. Configure R1 as an ASBR that advertises a default route in to the OSPF domain.
+#### R1 Configuration
+```sh
+R1(config)# router ospf 1
+R1(config-router)# network 10.0.13.1 0.0.0.0 area 0
+R1(config-router)# network 10.0.12.1 0.0.0.0 area 0
+R1(config-router)# network 1.1.1.1 0.0.0.0 area 0
+R1(config-router)# passive-interface l0
+```
+#### R2 Configuration
+```sh
+R2(config)# router ospf 2
+R2(config-router)# network 10.0.24.1 0.0.0.0 area 0
+R2(config-router)# network 10.0.12.2 0.0.0.0 area 0
+R2(config-router)# network 2.2.2.2 0.0.0.0 area 0
+R2(config-router)# passive-interface l0
+```
+#### R3 Configuration
+```sh
+R3(config)# router ospf 3
+R3(config-router)# network 10.0.13.2 0.0.0.0 area 0
+R3(config-router)# network 10.0.34.1 0.0.0.0 area 0
+R3(config-router)# network 3.3.3.3 0.0.0.0 area 0
+R3(config-router)# passive-interface l0
+```
+#### R4 Configuration
+```sh
+R4(config)# router ospf 4
+R4(config-router)# network 0.0.0.0 255.255.255.255 area 0
+R4(config-router)# passive-interface g0/0
+R4(config-router)# passive-interface l0
+```
 
+#### 4. Configure R1 as an ASBR that advertises a default route in to the OSPF domain.
+```sh
+R1(config-router)# default-information originate
+R1(config-router)# exit
+R1(config)# ip route 0.0.0.0 0.0.0.0 203.0.113.2
+```
 #### 5. Check the routing tables of R2, R3, and R4.  What default route(s) were added?
+In order to see ospf database `R1# show ip ospf database`.
