@@ -559,13 +559,18 @@ There are three ways to modify the OSPF cost:
    2. Manual configuration: `R1(config-if)# ip ospf cost cost`
    3. Change the interface bandwidth (not recommended): `R1(config-if)# bandwidth kilobits-per-second`
 The best way is to change the reference bandwidth to a value greater than the fastest links in the network.
+
 ##### OSPF Neighbors
+OSPF neighbors is the main task in configuring OSPF, once routers become neighbors, they automatically do the work of sharing network, calculating routes, etc. 
+
+When OSPF is activated on an interface, the router starts sending OSPF hello messages out of the inerface at regular intervals(determined by the hello timer). These are used to introduce the router to potential OSPF neighbors.
+
 ![OSPF_Neighbors](https://user-images.githubusercontent.com/49905811/172799195-23649d70-9ea2-409a-b16c-5263ac65905b.PNG)
 
 | Type | Name | Purpose |
-| - | - | - |
-| 1 | Hello | Neighbor discovery and maintenance |
-| 2 | Database Description (DBD) | Summary of the LSDB of the router. Used to check if the LSDB of each router is the same |
-| 3 | Link-State Request (LSR) | Request specific LSAs from the neighbor |
-| 4 | Link-State Update (LSU) | Sends specific LSAs to the neighbor |
-| 5 | Link-State Acknowledgement (LSAck) | Used to acknowledge that the router received a message |
+| :-: | :-: | :-: |
+| 1 | **Hello** | Neighbor discovery and maintenance |
+| 2 | **Database Description (DBD)** | Summary of the LSDB of the router. Used to check if the LSDB of each router is the same |
+| 3 | **Link-State Request (LSR)** | Request specific LSAs from the neighbor |
+| 4 | **Link-State Update (LSU)** | Sends specific LSAs to the neighbor |
+| 5 | **Link-State Acknowledgement (LSAck)** | Used to acknowledge that the router received a message |
