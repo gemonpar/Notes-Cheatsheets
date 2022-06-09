@@ -492,7 +492,7 @@ R1(config-router)# passive-interface l0
 R1(config-router)# variance 2
 ```
 
-## 10. OSPF (Open Shortest Path First)
+## 10. OSPF Part 1 (Open Shortest Path First)
 ![](/CCNA/Images/OSPF_1.PNG)
 
 #### 1. Configure the appropriate hostnames and IP addresses on each device.  Enable router interfaces. (You don't have to configure ISPR1)
@@ -550,3 +550,22 @@ R1(config)# ip route 0.0.0.0 0.0.0.0 203.0.113.2
 ```
 #### 5. Check the routing tables of R2, R3, and R4.  What default route(s) were added?
 In order to see ospf database `R1# show ip ospf database`.
+
+## 11. OSPF Part 2
+#### OSPF Cost
+A command to see the OSPF configuration: `R1# show ip ospf interface brief`
+There are three ways to modify the OSPF cost:
+   1. Change the reference bandwidth: `R1(config-router)# auto-cost reference-bandwith megabits-per-second`
+   2. Manual configuration: `R1(config-if)# ip ospf cost cost`
+   3. Change the interface bandwidth (not recommended): `R1(config-if)# bandwidth kilobits-per-second`
+The best way is to change the reference bandwidth to a value greater than the fastest links in the network.
+##### OSPF Neighbors
+![OSPF_Neighbors](https://user-images.githubusercontent.com/49905811/172799195-23649d70-9ea2-409a-b16c-5263ac65905b.PNG)
+
+| Type | Name | Purpose |
+| - | - | - |
+| 1 | Hello | Neighbor discovery and maintenance |
+| 2 | Database Description (DBD) | Summary of the LSDB of the router. Used to check if the LSDB of each router is the same |
+| 3 | Link-State Request (LSR) | Request specific LSAs from the neighbor |
+| 4 | Link-State Update (LSU) | Sends specific LSAs to the neighbor |
+| 5 | Link-State Acknowledgement (LSAck) | Used to acknowledge that the router received a message |
