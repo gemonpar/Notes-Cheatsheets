@@ -660,6 +660,7 @@ The OSPF 'network type' refers to the type of connection between OSPF neighbors.
    - Non-Broadcast: Enabled by default on Frame Relay and X.25 interfaces
 
 **Broadcast:**
+
 ![OSPF_BroadcastNetworkType](https://user-images.githubusercontent.com/49905811/173338503-9386fae9-ccb4-4915-9ed1-1f86dfd47e68.PNG)
 
 Enabled on Ethernet and FDDI interfaces by default. Routers dynamically discover neighbors by sending/listening for OSPF Hello messages using multicast address 224.0.0.5.
