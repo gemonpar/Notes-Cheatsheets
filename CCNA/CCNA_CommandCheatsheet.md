@@ -577,21 +577,21 @@ When OSPF is activated on an interface, the router starts sending OSPF hello mes
 
 ![](/CCNA/Images/OSPF_1.PNG)
 
-##### 1. Configure the appropriate hostnames and IP addresses on each device.  Enable router interfaces. (You don't have to configure ISPR1)
+#### 1. Configure the appropriate hostnames and IP addresses on each device.  Enable router interfaces. (You don't have to configure ISPR1)
 On every router this are the following commands to run replacing it with the appropiate interface and ip/mask:
 ```sh
 R1(config)# interface g0/0
 R1(config-if)# ip address 10.0.12.1 255.255.255.252
 R1(config-if)# no shutdown
 ```
-##### 2. Configure a loopback interface on each router (1.1.1.1/32 for R1, 2.2.2.2/32 for R2, etc.)
+#### 2. Configure a loopback interface on each router (1.1.1.1/32 for R1, 2.2.2.2/32 for R2, etc.)
 On every router this are the following commands to run, replacing it with the appropiate ip address of the loopback.
 ```sh
 R1(config)# interface l0
 R1(config)# ip address 1.1.1.1 255.255.255.255
 ```
-##### 3. Enable OSPF directly on each interface of the routers. Configure passive interfaces as appropriate.
-#### R1 Configuration
+#### 3. Enable OSPF directly on each interface of the routers. Configure passive interfaces as appropriate.
+##### R1 Configuration
 ```sh
 R1(config)# router ospf 1
 R1(config-router)# network 10.0.13.1 0.0.0.0 area 0
@@ -599,7 +599,7 @@ R1(config-router)# network 10.0.12.1 0.0.0.0 area 0
 R1(config-router)# network 1.1.1.1 0.0.0.0 area 0
 R1(config-router)# passive-interface l0
 ```
-#### R2 Configuration
+##### R2 Configuration
 ```sh
 R2(config)# router ospf 2
 R2(config-router)# network 10.0.24.1 0.0.0.0 area 0
@@ -607,7 +607,7 @@ R2(config-router)# network 10.0.12.2 0.0.0.0 area 0
 R2(config-router)# network 2.2.2.2 0.0.0.0 area 0
 R2(config-router)# passive-interface l0
 ```
-#### R3 Configuration
+##### R3 Configuration
 ```sh
 R3(config)# router ospf 3
 R3(config-router)# network 10.0.13.2 0.0.0.0 area 0
@@ -615,7 +615,7 @@ R3(config-router)# network 10.0.34.1 0.0.0.0 area 0
 R3(config-router)# network 3.3.3.3 0.0.0.0 area 0
 R3(config-router)# passive-interface l0
 ```
-#### R4 Configuration
+##### R4 Configuration
 ```sh
 R4(config)# router ospf 4
 R4(config-router)# network 0.0.0.0 255.255.255.255 area 0
@@ -623,11 +623,56 @@ R4(config-router)# passive-interface g0/0
 R4(config-router)# passive-interface l0
 ```
 
-##### 4. Configure the reference bandwidth on each router so a FastEthernet interface has a cost of 100.
+#### 4. Configure the reference bandwidth on each router so a FastEthernet interface has a cost of 100.
+##### R1 Configuratio
+`sh
+R1(config-router)# auto-cost reference-bandwidth 10000
+`
+##### R2 Configuration
+`sh
+R2(config-router)# auto-cost reference-bandwidth 10000
+`
+##### R3 Configuration
+`sh
+R3(config-router)# auto-cost reference-bandwidth 10000
+`
+##### R4 Configuration
+`sh
+R4(config-router)# auto-cost reference-bandwidth 10000
+`
 
-##### 5. Configure R1 as an ASBR that advertises a default route in to the OSPF domain.
+#### 5. Configure R1 as an ASBR that advertises a default route in to the OSPF domain.
 
-##### 6. Check the routing tables of R4. What default route(s) were added?
+##### R1 Configuration
+`sh
+R1(config-router)# default-information originate
+R1(config-router)# exit
+R1(config)# ip route 0.0.0.0 0.0.0.0 203.0.113.2
+`
+#### 6. Check the routing tables of R4. What default route(s) were added?
+On R4 both routes via R2 and R3 instead of the less cost via R2, that's because OSPF external cost takes part in and it decides the internal cost is redundant. Otherwise this is a CCNP topic.
 
-##### 7. Use Simulation mode to view the OSPF Hello messages being sent by the routers. What fields are included in the Hello message?
-    
+## 12. OSPF Part 3
+#### OSPF Nertwork Types
+The OSPF 'network type' refers to the type of connection between OSPF neighbors. There are three main OSPF network types:
+   - Broadcast: Enabled by default on Ethernet and FDDI(Fiber Distributed Data Interfaces) interfaces
+   - Point-to-point: Enabled by default on PPP(Point-to-Point Protocol) and HDLC(High-Level Data Link Control) interfaces
+   - Non-Broadcast: Enabled by default on Frame Relay and X.25 interfaces
+
+**Broadcast:**
+![OSPF_BroadcastNetworkType](https://user-images.githubusercontent.com/49905811/173338503-9386fae9-ccb4-4915-9ed1-1f86dfd47e68.PNG)
+
+Enabled on Ethernet and FDDI interfaces by default. Routers dynamically discover neighbors by sending/listening for OSPF Hello messages using multicast address 224.0.0.5.
+
+A DR (Designated Router) and BDR (Backup Designated Router) must be elected on each subnet (only DR if there are no OSPF neighbors). Routers which aren't the DR or BDR become a DROther.
+
+The DR/BDR election order of priority:
+   1. Highest OSPF interface priority
+   2. Highest OSPF Router ID
+'First place' becomes the DR fot he subnet, 'second place' becomes the BDR. The default OSPF interface priority is 1 on all interfaces.
+
+**Point-to-point:**
+**Non-Broadcast:**
+#### OSPF Neighbor/Adjacency Requirements
+#### OSPF LSA Types
+
