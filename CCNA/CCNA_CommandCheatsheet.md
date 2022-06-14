@@ -625,30 +625,30 @@ R4(config-router)# passive-interface l0
 
 #### 4. Configure the reference bandwidth on each router so a FastEthernet interface has a cost of 100.
 ##### R1 Configuratio
-`sh
+```sh
 R1(config-router)# auto-cost reference-bandwidth 10000
-`
+```
 ##### R2 Configuration
-`sh
+```sh
 R2(config-router)# auto-cost reference-bandwidth 10000
-`
+```
 ##### R3 Configuration
-`sh
+```sh
 R3(config-router)# auto-cost reference-bandwidth 10000
-`
+```
 ##### R4 Configuration
-`sh
+```sh
 R4(config-router)# auto-cost reference-bandwidth 10000
-`
+```
 
 #### 5. Configure R1 as an ASBR that advertises a default route in to the OSPF domain.
 
 ##### R1 Configuration
-`sh
+```sh
 R1(config-router)# default-information originate
 R1(config-router)# exit
 R1(config)# ip route 0.0.0.0 0.0.0.0 203.0.113.2
-`
+```
 #### 6. Check the routing tables of R4. What default route(s) were added?
 On R4 both routes via R2 and R3 instead of the less cost via R2, that's because OSPF external cost takes part in and it decides the internal cost is redundant. Otherwise this is a CCNP topic.
 
@@ -709,8 +709,8 @@ Note: No all network types work on all link types (for example, a serial link ca
 4. OSPF Router IDs must be unique
 5. Hello adn Dead timers must match
 6. Authentication settings must match
-7. IP MTU settings must match   ||
-8. OSPF Network Type must match || (Can become OSPF neighbors, but OSPF doesn't operate properly)
+7. IP MTU settings must match   |-> (Can become OSPF neighbors, but OSPF doesn't operate properly)
+8. OSPF Network Type must match |-> (Can become OSPF neighbors, but OSPF doesn't operate properly)
 
 #### OSPF LSA Types
 ![LSA_Types](https://user-images.githubusercontent.com/49905811/173555847-85b8cfc2-7df7-4edf-a06f-d669920da4fd.PNG)
